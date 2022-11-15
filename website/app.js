@@ -12,11 +12,11 @@ const generateButton = document.getElementById("generate");
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
+let newDate = d.getMonth() + 1 + "." + d.getDate() + "." + d.getFullYear();
 
 // API Key and API URL
 const apiUrl = "http://api.openweathermap.org/data/2.5/forecast?zip=";
-const apiKey = "&appid=1975552d54d6e3e267a168f2ec221e87";
+const apiKey = "&appid=1975552d54d6e3e267a168f2ec221e87&units=metric";
 
 // action when clicking on generate button
 generateButton.addEventListener("click", doAction);
@@ -41,7 +41,7 @@ function doAction(elem) {
 }
 
 // the getWeatherData function
-// the order of data in Parentheses is the order of api
+// the order of data in Parentheses is the order of api (api url + zip + api key)
 const getWeatherData = async (apiUrl, zipCode, apiKey) => {
   const response = await fetch(apiUrl + zipCode + apiKey);
   try {
@@ -80,9 +80,9 @@ const updateUI = async () => {
   try {
     const allData = await request.json();
     console.log(allData);
-    dateField.innerHTML = "date: " + allData[0].date;
-    tempField.innerHTML = "temp: " + allData[0].temp;
-    contentField.innerHTML = "feeling: " + allData[0].content;
+    dateField.innerHTML = "date: " + allData.date;
+    tempField.innerHTML = "temp: " + allData.temp + ` C<sup>o</sup>`;
+    contentField.innerHTML = "feeling: " + allData.content;
   } catch (error) {
     console.log("error", error);
     // appropriately handle the error
